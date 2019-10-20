@@ -1,28 +1,126 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <product-list 
+      :products="products"
+      v-on:view-product="openDialog"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ProductList from "./components/ProductList";
 
 export default {
-  name: 'app',
+  name: "App",
   components: {
-    HelloWorld
+    'product-list': ProductList,
+  },
+  data: function() {
+    return {
+      product: {
+        "name": "Sample",
+        "sku": "sample-12345",
+        "quantity": 110,
+        "stocks": [
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:11:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:10:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:09:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:08:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:07:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:06:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:05:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:04:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:03:00Z",
+                  "transactionType": 1
+              },
+              {
+                  "product": 1,
+                  "quantity": 10,
+                  "date": "2019-10-19T10:02:00Z",
+                  "transactionType": 1
+              }
+          ]
+      },
+      products: [
+        {
+            "name": "Sample",
+            "sku": "sample-12345",
+            "quantity": 10
+        },
+      ],
+    }
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 15px;
+  max-width: 1000px;
+  margin: 60px auto;
+  align-items: baseline;
+}
+
+html, body {
+  background-color: #efefef !important;
+  height: 100%;
+}
+
+body {
+  margin: 0 15px;
+}
+
+.md-card {
+  background-color: #ffffff;
 }
 </style>

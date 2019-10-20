@@ -8,6 +8,12 @@
     </div>
     <product-list 
       :products="products"
+      v-on:view-product="openDialog"
+    />
+    <product-view 
+      :open="openProductView"
+      :product="product"
+      v-on:close-dialog="closeDialog"
     />
   </div>
 </template>
@@ -17,6 +23,7 @@ import Vue from 'vue';
 import AddTransactionForm from "./components/AddTransactionForm";
 import AddProductForm from "./components/AddProductForm";
 import ProductList from "./components/ProductList";
+import ProductView from "./components/ProductView";
 
 export default {
   name: "App",
@@ -27,9 +34,11 @@ export default {
     'transaction-form': AddTransactionForm,
     'product-form': AddProductForm,
     'product-list': ProductList,
+    'product-view': ProductView
   },
   data: function() {
     return {
+      openProductView: false,
       product: {
         "name": "Sample",
         "sku": "sample-12345",
@@ -99,11 +108,19 @@ export default {
       },
       products: []
     }
-  }, methods: {
+  }, 
+  methods: {
     getProducts: function() {
       Vue.axios.get("http://localhost:8000/product/").then((response) => {
         this.products = response.data;
       })
+    },
+    closeDialog: function(status) {
+      this.openProductView = status;
+    },
+    openDialog: function(index) {
+      this.openProductView = true;
+      this.product = this.products[index];
     }
   },
 };
@@ -121,7 +138,7 @@ export default {
   grid-gap: 15px;
   max-width: 1000px;
   margin: 60px auto;
-  align-items: baseline;
+  align-items: flex-start;
 }
 
 html, body {

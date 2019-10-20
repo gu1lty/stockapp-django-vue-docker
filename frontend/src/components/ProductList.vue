@@ -21,6 +21,7 @@
         <md-table-cell class="md-center">
           <md-button 
             class="md-primary"
+            @click="viewProduct(index)"
           >
             View
           </md-button>
@@ -34,6 +35,11 @@
 export default {
   name: "ProductList",
   props: ['products'],
+  methods: {
+    viewProduct: function(index) {
+      this.$emit("view-product", index);
+    }
+  },
 }
 </script>
 

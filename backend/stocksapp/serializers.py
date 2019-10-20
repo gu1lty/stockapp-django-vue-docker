@@ -1,11 +1,6 @@
 from rest_framework import serializers
 from .models import Product, Transaction
 
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ('name', 'sku', 'quantity',)
-
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
@@ -35,6 +30,16 @@ class TransactionSerializer(serializers.ModelSerializer):
         p.save()
         t = Transaction(**validated_data)
         t.product = p
-        t.transactionType = tType
-        t.quantity = tQuantity
+        t.save()
         return t
+
+class ProductSerializer(serializers.ModelSerializer):
+    stocks = serializers.SerializerMethodField()
+
+    def get_stocks(self, obj):
+        stocks = Transaction.objects.order_by('-date')[:10]
+        return TransactionSerializer(stocks, many=True).data
+        
+    class Meta:
+        model = Product
+        fields = ('name', 'sku', 'quantity', 'stocks',)

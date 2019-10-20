@@ -20,8 +20,7 @@
         <md-table-cell md-numeric>{{product.quantity}}</md-table-cell>
         <md-table-cell class="md-center">
           <md-button 
-            class="md-primary md-icon-button"
-            @click="viewProduct(index)"
+            class="md-primary"
           >
             View
           </md-button>

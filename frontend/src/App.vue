@@ -1,18 +1,22 @@
 <template>
   <div id="app">
+    <div class="forms">
+      <product-form />
+    </div>
     <product-list 
       :products="products"
-      v-on:view-product="openDialog"
     />
   </div>
 </template>
 
 <script>
+import AddProductForm from "./components/AddProductForm";
 import ProductList from "./components/ProductList";
 
 export default {
   name: "App",
   components: {
+    'product-form': AddProductForm,
     'product-list': ProductList,
   },
   data: function() {

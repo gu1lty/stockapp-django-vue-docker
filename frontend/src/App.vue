@@ -13,12 +13,16 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import AddTransactionForm from "./components/AddTransactionForm";
 import AddProductForm from "./components/AddProductForm";
 import ProductList from "./components/ProductList";
 
 export default {
   name: "App",
+  mounted() {
+    this.getProducts();
+  },
   components: {
     'transaction-form': AddTransactionForm,
     'product-form': AddProductForm,
@@ -93,15 +97,15 @@ export default {
               }
           ]
       },
-      products: [
-        {
-            "name": "Sample",
-            "sku": "sample-12345",
-            "quantity": 10
-        },
-      ],
+      products: []
     }
-  }
+  }, methods: {
+    getProducts: function() {
+      Vue.axios.get("http://localhost:8000/product/").then((response) => {
+        this.products = response.data;
+      })
+    }
+  },
 };
 </script>
 

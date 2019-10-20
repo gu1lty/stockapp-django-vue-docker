@@ -2,6 +2,9 @@
   <div id="app">
     <div class="forms">
       <product-form />
+      <transaction-form 
+        :products="products"
+      />
     </div>
     <product-list 
       :products="products"
@@ -10,12 +13,14 @@
 </template>
 
 <script>
+import AddTransactionForm from "./components/AddTransactionForm";
 import AddProductForm from "./components/AddProductForm";
 import ProductList from "./components/ProductList";
 
 export default {
   name: "App",
   components: {
+    'transaction-form': AddTransactionForm,
     'product-form': AddProductForm,
     'product-list': ProductList,
   },

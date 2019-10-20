@@ -14,3 +14,7 @@ class Transaction(models.Model):
     quantity = models.IntegerField(default=0)
     date = models.DateTimeField()
     transactionType = models.IntegerField()
+
+    def __str__(self):
+        return '%s %s %d' % (self.date, ("Stock In" if self.transactionType > 0 else "Stock Out"), self.quantity)
+    

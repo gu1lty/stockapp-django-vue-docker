@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="forms">
-      <product-form />
+      <product-form 
+        v-on:add-success="successfulAdd"
+      />
       <transaction-form 
         :products="products"
       />
@@ -15,6 +17,15 @@
       :product="product"
       v-on:close-dialog="closeDialog"
     />
+    <md-snackbar 
+      md-position="center" 
+      :md-duration="4000" 
+      :md-active.sync="openSnackbar" 
+      md-persistent
+    >
+        <span>{{snackbarMessage}}</span>
+        <md-button class="md-primary" @click="openSnackbar = false">Close</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -39,6 +50,8 @@ export default {
   data: function() {
     return {
       openProductView: false,
+      openSnackbar: false,
+      snackbarMessage: "",
       product: {
         "name": "Sample",
         "sku": "sample-12345",
@@ -106,7 +119,7 @@ export default {
               }
           ]
       },
-      products: []
+      products: [],
     }
   }, 
   methods: {
@@ -114,6 +127,11 @@ export default {
       Vue.axios.get("http://localhost:8000/product/").then((response) => {
         this.products = response.data;
       })
+    },
+    successfulAdd: function() {
+      this.snackbarMessage = "Item successfully added.";
+      this.openSnackbar = true;
+      this.getProducts();
     },
     closeDialog: function(status) {
       this.openProductView = status;

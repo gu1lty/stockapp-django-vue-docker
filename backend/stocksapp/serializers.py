@@ -37,7 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
     stocks = serializers.SerializerMethodField()
 
     def get_stocks(self, obj):
-        stocks = Transaction.objects.order_by('-date')[:10]
+        stocks = Transaction.objects.filter(product=obj.id).order_by('-date')[:10]
         return TransactionSerializer(stocks, many=True).data
         
     class Meta:

@@ -3,13 +3,23 @@
     <md-card-header>
         <h1 class="md-title">Add Product</h1>
     </md-card-header>
-    <md-field>
-      <label>Name</label>
-      <md-input v-model="name"></md-input>
+    <md-field :class="nameErrorMessage">
+        <label>Name</label>
+        <md-input 
+            v-model="name" 
+            @change="resetError"
+            required
+        />
+      <span class="md-error">{{nameMessage}}</span>
     </md-field>
-    <md-field>
-      <label>SKU</label>
-      <md-input v-model="sku"></md-input>
+    <md-field :class="skuErrorMessage">
+        <label>SKU</label>
+        <md-input 
+            v-model="sku" 
+            @change="resetError"
+            required
+        />
+      <span class="md-error">{{skuMessage}}</span>
     </md-field>
     <md-card-actions>
       <md-button type="submit" class="md-primary">Submit</md-button>
@@ -18,19 +28,70 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 export default {
   name: "ProductForm",
   data: function() {
     return {
-      name: "",
-      sku: "",
+        name: "",
+        sku: "",
+        nameError: false,
+        nameMessage: "",
+        skuError: false,
+        skuMessage: "",
     }
   },
   methods: {
-    submitForm(event) {
-      event.preventDefault();
+    resetError: function () {
+        this.nameError =  false;
+        this.nameMessage =  "";
+        this.skuError =  false;
+        this.skuMessage = "";
+    },
+    submitForm: function(event) {
+        event.preventDefault();
+        const data = {
+            "name": this.name,
+            "sku" : this.sku
+        }
+        Vue.axios.post("http://localhost:8000/product/", data)
+        .then().catch(event => {
+            if(event.response) {
+                const { sku, name } = event.response.data;
+                let success = true;
+
+                if(name) {
+                    this.nameError = true;
+                    this.nameMessage = name[0].charAt(0).toUpperCase() + name[0].slice(1);
+                    success = false;
+                }
+
+                if(sku) {
+                    this.skuError = true;
+                    this.skuMessage = sku[0].charAt(0).toUpperCase() + sku[0].slice(1);
+                    success = false;
+                }
+
+                if(success) {
+                    this.$emit("add-success", true);
+                }
+            }
+        })
     }
-  }
+  },
+  computed: {
+        nameErrorMessage: function() {
+            return {
+                'md-invalid': this.nameMessage
+            }
+        },
+        skuErrorMessage: function() {
+            return {
+                'md-invalid': this.skuMessage
+            }
+        }
+    }
 }
 </script>
 

@@ -6,6 +6,7 @@
       />
       <transaction-form 
         :products="products"
+        v-on:add-success="successfulTransaction"
       />
     </div>
     <product-list 
@@ -130,6 +131,11 @@ export default {
     },
     successfulAdd: function() {
       this.snackbarMessage = "Item successfully added.";
+      this.openSnackbar = true;
+      this.getProducts();
+    },
+    successfulTransaction: function() {
+      this.snackbarMessage = "Transaction Successful.";
       this.openSnackbar = true;
       this.getProducts();
     },

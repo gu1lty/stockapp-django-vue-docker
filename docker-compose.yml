@@ -14,3 +14,9 @@ services:
       - db
   db:
     image: postgres
+  frontend:
+    build:
+      context: ./frontend/
+    ports:
+      - "80:80"
+    

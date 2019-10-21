@@ -10,7 +10,11 @@ The frontend uses Axiom to communicate to the API, and the backend has CORS Head
 
 Testing will be added later today
 
-#Running the Application
+## Running the Application
+
 1. Go to the main project directory
-2. Run docker-compose up
+2. Run 
+```bash
+docker-compose up
+```
 3. Access localhost through the browser

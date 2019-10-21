@@ -9,3 +9,8 @@ It was dockerized using two dockerfiles one for the frontend and one for the bac
 The frontend uses Axiom to communicate to the API, and the backend has CORS Headers that allow access to all incoming requests.
 
 Testing will be added later today
+
+#Running the Application
+1. Go to the main project directory
+2. Run docker-compose up
+3. Access localhost through the browser

@@ -56,25 +56,24 @@ export default {
             "sku" : this.sku
         }
         Vue.axios.post("http://localhost:8000/product/", data)
-        .then().catch(event => {
+        .then(e => {
+            if(e){
+                this.$emit("add-success", true);
+                this.name = "";
+                this.sku  = "";
+            }
+        }).catch(event => {
             if(event.response) {
                 const { sku, name } = event.response.data;
-                let success = true;
 
                 if(name) {
                     this.nameError = true;
                     this.nameMessage = name[0].charAt(0).toUpperCase() + name[0].slice(1);
-                    success = false;
                 }
 
                 if(sku) {
                     this.skuError = true;
                     this.skuMessage = sku[0].charAt(0).toUpperCase() + sku[0].slice(1);
-                    success = false;
-                }
-
-                if(success) {
-                    this.$emit("add-success", true);
                 }
             }
         })
